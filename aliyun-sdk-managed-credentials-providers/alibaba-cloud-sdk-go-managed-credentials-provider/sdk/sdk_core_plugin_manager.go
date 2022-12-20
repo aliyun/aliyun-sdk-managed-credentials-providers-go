@@ -1,8 +1,10 @@
 package sdk
 
 import (
-	"github.com/aliyun/alibaba-cloud-sdk-go/sdk"
 	"sync"
+
+	"github.com/aliyun/alibaba-cloud-sdk-go/sdk"
+	commonsdk "github.com/aliyun/aliyun-sdk-managed-credentials-providers-go/aliyun-sdk-managed-credentials-providers/aliyun-sdk-common-managed-credentials-provider/sdk"
 )
 
 var sdkCorePlugin *secretsManagerSdkCorePlugin
@@ -12,7 +14,11 @@ func GetClient(client interface{}, regionId string, secretName string) (interfac
 	return GetClientWithOptions(client, regionId, nil, secretName)
 }
 func GetClientWithOptions(client interface{}, regionId string, config *sdk.Config, secretName string) (interface{}, error) {
-	client, err := sdkCorePlugin.getClient(client, regionId, config, secretName)
+	err := initSecretsManagerPlugin()
+	if err != nil {
+		return nil, err
+	}
+	client, err = sdkCorePlugin.getClient(client, regionId, config, secretName)
 	if err != nil {
 		return nil, err
 	}
@@ -20,7 +26,10 @@ func GetClientWithOptions(client interface{}, regionId string, config *sdk.Confi
 }
 
 func CloseSDKCoreClient(client interface{}, secretName string) error {
-	initSecretsManagerPlugin()
+	err := initSecretsManagerPlugin()
+	if err != nil {
+		return err
+	}
 	return sdkCorePlugin.closeSDKCoreClient(client, secretName)
 }
 
@@ -30,7 +39,11 @@ func Destroy() {
 	}
 }
 
-func initSecretsManagerPlugin() {
+func initSecretsManagerPlugin() (err error) {
+	err = commonsdk.Init()
+	if err != nil {
+		return
+	}
 	once.Do(func() {
 		sdkCorePlugin = newSecretsManagerSdkCorePlugin()
 	})
