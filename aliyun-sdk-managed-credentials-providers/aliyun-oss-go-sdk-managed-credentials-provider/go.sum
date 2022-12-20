@@ -16,8 +16,12 @@ github.com/aliyun/alibabacloud-dkms-transfer-go-sdk v0.1.1 h1:L+2U8KUGPzBd/tyV/o
 github.com/aliyun/alibabacloud-dkms-transfer-go-sdk v0.1.1/go.mod h1:18yN9wX1LB5P/GuICAuK8G7QmfhLC/+p58f88pocW0U=
 github.com/aliyun/aliyun-oss-go-sdk v2.2.5+incompatible h1:QoRMR0TCctLDqBCMyOu1eXdZyMw3F7uGA9qPn2J4+R8=
 github.com/aliyun/aliyun-oss-go-sdk v2.2.5+incompatible/go.mod h1:T/Aws4fEfogEE9v+HPhhw+CntffsBHJ8nXQCwKr0/g8=
+github.com/aliyun/aliyun-sdk-managed-credentials-providers-go/aliyun-sdk-managed-credentials-providers/aliyun-sdk-common-managed-credentials-provider v0.0.2 h1:Mp1msuvJh0e39YaGl3WNhUGimWQ71WwqO0LhdououwQ=
+github.com/aliyun/aliyun-sdk-managed-credentials-providers-go/aliyun-sdk-managed-credentials-providers/aliyun-sdk-common-managed-credentials-provider v0.0.2/go.mod h1:Olhm1W/6jJH/7wk/XMlTPjieSfx/oqunEg4pkok2p0o=
 github.com/aliyun/aliyun-secretsmanager-client-go v1.1.0 h1:ksg2VH7f49B29rKlE1wVDzykeoEZkXqaD7J0YPDfyBY=
 github.com/aliyun/aliyun-secretsmanager-client-go v1.1.0/go.mod h1:EJJkC5XHLNfLf+imc1A2OXBbtVePbZyC9kufQF0Uh3g=
+github.com/aliyun/aliyun-secretsmanager-client-go v1.1.2 h1:NATmRRCPy9gbYrBXl86Ry9lt09SA7fzfoEwX6lTHFf4=
+github.com/aliyun/aliyun-secretsmanager-client-go v1.1.2/go.mod h1:EJJkC5XHLNfLf+imc1A2OXBbtVePbZyC9kufQF0Uh3g=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=

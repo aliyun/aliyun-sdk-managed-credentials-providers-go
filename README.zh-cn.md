@@ -35,17 +35,21 @@
 
 托管凭证插件在访问阿里云开放API时，定期获取由`凭据名称`表示的访问凭据，并提供给阿里云SDK。提供程序通常以指定的间隔（可配置）刷新本地缓存的访问凭据。
 
+在某些情况下，缓存的访问凭据不再有效，这通常发生在管理员在凭据管家中执行紧急访问凭据轮转以响应泄漏事件时。使用无效访问凭据调用OpenAPI通常会导致与API错误代码对应的异常。如果相应的错误代码为`InvalidAccessKeyId.NotFound`或`InvalidAccessKeyId`，则托管凭据插件提供程序将立即刷新缓存的访问评剧馆并重试失败的OpenAPI。
+
+如果API返回使用过期访问凭据的其他错误代码，应用程序开发人员可以覆盖或扩展特定云服务的此行为。请参阅[修改默认过期处理程序](#修改默认过期处理程序示例)。
+
 ## 安装
 
-您可以使用`go mod`管理您的依赖：
+您可以使用`go mod`管理您的依赖，下面以OSS插件导入为示例:
 
 ```
 require (
-	github.com/aliyun/aliyun-sdk-managed-credentials-providers-go/aliyun-sdk-managed-credentials-providers/aliyun-oss-go-sdk-managed-credentials-provider v0.0.1
+	github.com/aliyun/aliyun-sdk-managed-credentials-providers-go/aliyun-sdk-managed-credentials-providers/aliyun-oss-go-sdk-managed-credentials-provider v0.0.2
 )
 ```
 
-或者，通过`go get`命令获取远程代码包：
+或者，通过`go get`命令安装远程代码包:
 
 ```
 $ go get -u github.com/aliyun/aliyun-sdk-managed-credentials-providers-go/aliyun-sdk-managed-credentials-providers/aliyun-oss-go-sdk-managed-credentials-provider
@@ -69,9 +73,25 @@ $ go get -u github.com/aliyun/aliyun-sdk-managed-credentials-providers-go/aliyun
 通过配置文件(`managed_credentials_providers.properties`)指定访问凭据管家([配置文件设置详情](README_config.zh-cn.md))，推荐采用Client Key方式访问凭据管家
 
 ```properties
-cache_client_dkms_config_info=[{"ignoreSslCerts":false,"caCert":"path/to/caCert","passwordFromFilePathName":"client_key_password_from_file_path","clientKeyFile":"<your client key file absolute path>","regionId":"<your dkms region>","endpoint":"<your dkms endpoint>"}]
+ cache_client_dkms_config_info=[{"regionId":"<your dkms region>","endpoint":"<your dkms endpoint>","passwordFromFilePath":"< your password file path >","clientKeyFile":"<your client key file path>","ignoreSslCerts":false,"caFilePath":"<your CA certificate file path>"}]
+```
+```
+    cache_client_dkms_config_info配置项说明:
+    1. cache_client_dkms_config_info配置项为json数组，支持配置多个region实例
+    2. regionId:地域Id
+    3. endpoint:专属kms的域名地址
+    4. passwordFromFilePath和passwordFromEnvVariable
+       passwordFromFilePath:client key密码配置从文件中获取，与passwordFromEnvVariable二选一
+       例:当配置passwordFromFilePath:<你的client key密码文件所在的路径>,需在配置的路径下配置写有password的文件
+       passwordFromEnvVariable:client key密码配置从环境变量中获取，与passwordFromFilePath二选一
+       例:当配置"passwordFromEnvVariable":"your_password_env_variable"时，
+         需在环境变量中添加your_password_env_variable=<你的client key对应的密码>
+    5. clientKeyFile:client key json文件的路径
+    6. ignoreSslCerts:是否忽略ssl证书 (true:忽略ssl证书,false:验证ssl证书)
+    7. caFilePath:专属kms的CA证书路径
 ```
 
+说明：插件默认从程序当前目录加载配置文件。
 
 ### 步骤 2 使用托管凭据插件访问云服务
 
@@ -82,8 +102,8 @@ package sample
 
 import (
 	"fmt"
-	
-	ossprovider "aliyun-oss-go-sdk-managed-credentials-provider/sdk"
+
+	ossprovider "github.com/aliyun/aliyun-sdk-managed-credentials-providers-go/aliyun-sdk-managed-credentials-providers/aliyun-oss-go-sdk-managed-credentials-provider/sdk"
 )
 
 func main() {
@@ -112,7 +132,7 @@ func main() {
 
 ```
 
-修改默认过期处理程序示例
+## 修改默认过期处理程序示例
 
 在支持用户自定义错误重试的托管凭据go插件中，用户可以自定义客户端因凭据手动轮转极端场景下的错误重试判断逻辑，只实现以下接口即可。
 
@@ -132,9 +152,9 @@ package sample
 
 import (
 	"fmt"
-	
-	ossprovider "aliyun-oss-go-sdk-managed-credentials-provider/sdk"
+
 	"github.com/aliyun/aliyun-oss-go-sdk/oss"
+	ossprovider "github.com/aliyun/aliyun-sdk-managed-credentials-providers-go/aliyun-sdk-managed-credentials-providers/aliyun-oss-go-sdk-managed-credentials-provider/sdk"
 )
 
 type MyOssAKExpireHandler struct {
