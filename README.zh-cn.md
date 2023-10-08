@@ -102,14 +102,15 @@ package sample
 
 import (
 	"fmt"
-
 	ossprovider "github.com/aliyun/aliyun-sdk-managed-credentials-providers-go/aliyun-sdk-managed-credentials-providers/aliyun-oss-go-sdk-managed-credentials-provider/sdk"
+	//"github.com/aliyun/aliyun-sdk-managed-credentials-providers-go/aliyun-sdk-managed-credentials-providers/aliyun-sdk-common-managed-credentials-provider/sdk/utils"
 )
 
 func main() {
 	secretName := "********"
 	endpoint := "https://oss-cn-hangzhou.aliyuncs.com"
-
+	//自定义配置文件
+	//utils.SetConfigName("custom-config")
 	// 获取Proxy Oss Client
 	client, err := ossprovider.New(endpoint, secretName)
 	if err != nil {
@@ -155,6 +156,7 @@ import (
 
 	"github.com/aliyun/aliyun-oss-go-sdk/oss"
 	ossprovider "github.com/aliyun/aliyun-sdk-managed-credentials-providers-go/aliyun-sdk-managed-credentials-providers/aliyun-oss-go-sdk-managed-credentials-provider/sdk"
+	//"github.com/aliyun/aliyun-sdk-managed-credentials-providers-go/aliyun-sdk-managed-credentials-providers/aliyun-sdk-common-managed-credentials-provider/sdk/utils"
 )
 
 type MyOssAKExpireHandler struct {
@@ -175,7 +177,8 @@ const AkExpireErrorCode = "InvalidAccessKeyId"
 func main() {
 	secretName := "********"
 	endpoint := "https://oss-cn-hangzhou.aliyuncs.com"
-
+	//自定义配置文件
+	//utils.SetConfigName("custom-config")
 	// 获取Proxy Oss Client
 	akExpireHandler := &MyOssAKExpireHandler{Code: AkExpireErrorCode}
 	client, err := ossprovider.NewProxyOssClientWithHandler(endpoint, secretName, akExpireHandler)
