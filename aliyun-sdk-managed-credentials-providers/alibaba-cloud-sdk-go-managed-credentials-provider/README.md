@@ -73,12 +73,15 @@ import (
 	"fmt"
 	"github.com/aliyun/alibaba-cloud-sdk-go/services/ecs"
 	sdkcoreprovider "github.com/aliyun/aliyun-sdk-managed-credentials-providers-go/aliyun-sdk-managed-credentials-providers/alibaba-cloud-sdk-go-managed-credentials-provider/sdk"
+	//"github.com/aliyun/aliyun-sdk-managed-credentials-providers-go/aliyun-sdk-managed-credentials-providers/aliyun-sdk-common-managed-credentials-provider/sdk/utils"
 )
 
 func main() {
 	secretName := "********"
 	regionId := "cn-hangzhou"
 
+	//custom configuration
+	//utils.SetConfigName("custom-config")
 	client, err := sdkcoreprovider.GetClient(&ecs.Client{}, regionId, secretName)
 	if err != nil {
 		fmt.Println(err)

@@ -3,6 +3,7 @@ package service
 import (
 	"errors"
 	"fmt"
+	"github.com/aliyun/aliyun-sdk-managed-credentials-providers-go/aliyun-sdk-managed-credentials-providers/aliyun-sdk-common-managed-credentials-provider/sdk/utils"
 	"strconv"
 
 	"github.com/aliyun/aliyun-sdk-managed-credentials-providers-go/aliyun-sdk-managed-credentials-providers/aliyun-sdk-common-managed-credentials-provider/sdk/constants"
@@ -16,7 +17,11 @@ type DefaultPluginCredentialsLoader struct {
 }
 
 func (loader *DefaultPluginCredentialsLoader) Load() (*SecretsManagerPluginCredentialsProvider, error) {
-	credentialsProperties, err := cutils.LoadCredentialsProperties(constants.DefaultConfigName)
+	configName := utils.GetConfigName()
+	if configName == "" {
+		configName = constants.DefaultConfigName
+	}
+	credentialsProperties, err := cutils.LoadCredentialsProperties(configName)
 	if err != nil {
 		return nil, err
 	}
