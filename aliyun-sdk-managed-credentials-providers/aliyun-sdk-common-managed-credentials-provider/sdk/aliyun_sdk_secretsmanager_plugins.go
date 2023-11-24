@@ -3,6 +3,7 @@ package sdk
 import (
 	"errors"
 	"fmt"
+	"github.com/aliyun/aliyun-sdk-managed-credentials-providers-go/aliyun-sdk-managed-credentials-providers/aliyun-sdk-common-managed-credentials-provider/sdk/utils"
 	"os"
 	"os/user"
 	"path/filepath"
@@ -73,6 +74,7 @@ func (assmp *aliyunSdkSecretsManagerPlugin) init() error {
 		}
 		assmp.provider = provider
 	}
+	cservice.UserAgentManager.RegisterUserAgent(utils.SECRETSMANAGER_PLUGIN_GO_OF_USER_AGENT, utils.SECRETSMANAGER_PLUGIN_GO_OF_USER_AGENT_PRIORITY, utils.PROJECT_VERSION)
 	err := assmp.initLogger()
 	if err != nil {
 		return err
