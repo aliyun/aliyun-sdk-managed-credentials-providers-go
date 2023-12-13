@@ -43,7 +43,7 @@ If you use `go mod` to manage your dependence, You can declare the dependence in
 
 ```
 require (
-	github.com/aliyun/aliyun-sdk-managed-credentials-providers-go/aliyun-sdk-managed-credentials-providers/aliyun-oss-go-sdk-managed-credentials-provider v0.0.2
+	github.com/aliyun/aliyun-sdk-managed-credentials-providers-go/aliyun-sdk-managed-credentials-providers/aliyun-oss-go-sdk-managed-credentials-provider v0.0.6
 )
 ```
 
