@@ -26,7 +26,7 @@ OSS Go SDK托管凭据插件可以使Golang开发者通过托管RAM凭据快速�
 
 ```
 require (
-	github.com/aliyun/aliyun-sdk-managed-credentials-providers-go/aliyun-sdk-managed-credentials-providers/aliyun-oss-go-sdk-managed-credentials-provider v0.0.2
+	github.com/aliyun/aliyun-sdk-managed-credentials-providers-go/aliyun-sdk-managed-credentials-providers/aliyun-oss-go-sdk-managed-credentials-provider v0.0.6
 )
 ```
 

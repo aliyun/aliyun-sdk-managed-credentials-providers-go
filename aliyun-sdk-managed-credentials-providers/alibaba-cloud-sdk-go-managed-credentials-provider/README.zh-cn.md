@@ -22,7 +22,7 @@
 
 ```
 require (
-	github.com/aliyun/aliyun-sdk-managed-credentials-providers-go/aliyun-sdk-managed-credentials-providers/alibaba-cloud-sdk-go-managed-credentials-provider v0.0.2
+	github.com/aliyun/aliyun-sdk-managed-credentials-providers-go/aliyun-sdk-managed-credentials-providers/alibaba-cloud-sdk-go-managed-credentials-provider v0.0.6
 )
 ```
 
